@@ -484,6 +484,12 @@ class PlayerCog(commands.Cog):
         }
         for role in roles:
             overwrites[role] = discord.PermissionOverwrite(view_channel=True)
+        
+        #Allow general spectators to also view the newly created channel
+        specrole = discord.utils.get(ctx.guild.roles, name="Spectator")
+        if specrole is not None:
+            overwrites[specrole] = discord.PermissionOverwrite(view_channel=True)
+
         try:
             channel = await category.create_text_channel(
                 channel_name, overwrites=overwrites
